@@ -1,20 +1,31 @@
 <template>
   <h1>{{ msg }}</h1>
-  <button @click="count++">count is: {{ count }}</button>
-  <p>Edit <code>components/HelloWorld.vue</code> to test hot module replacement.</p>
-  <p>hello vite</p>
+  <button @click="inCrement"> count is: </button>
+  <p>{{ count }}</p>
 </template>
 
 <script>
-export default {
-  name: 'HelloWorld',
-  props: {
-    msg: String
-  },
-  data() {
-    return {
-      count: 0
+  import { defineComponent, computed } from 'vue'
+  import { useStore } from 'vuex'
+  import { key } from '../store'
+
+  export default defineComponent({
+    name: 'HelloWorld',
+    props: {
+      msg: {
+        type: String,
+        default: ''
+      }
+    },
+    setup() {
+      const store = useStore(key)
+
+      const count = computed(() => store.state.count)
+
+      return {
+        count,
+        inCrement: () => store.commit('increment')
+      }
     }
-  }
-}
+  })
 </script>
