@@ -1,6 +1,7 @@
 <template>
   <h1>{{ msg }}</h1>
   <button @click="inCrement"> count is: </button>
+  <button @click="updateWelcome"> update welcome </button>
   <p>{{ count }}</p>
 </template>
 
@@ -11,20 +12,15 @@
 
   export default defineComponent({
     name: 'HelloWorld',
-    props: {
-      msg: {
-        type: String,
-        default: ''
-      }
-    },
     setup() {
       const store = useStore(key)
-
       const count = computed(() => store.state.count)
-
+      const msg = computed(() => store.state.msg)
       return {
+        msg,
         count,
-        inCrement: () => store.commit('increment')
+        inCrement: () => store.commit('increment'),
+        updateWelcome: () => store.commit('updateWelcome')
       }
     }
   })
